@@ -39,21 +39,21 @@ while looper:
     else:
         sense.clear((255, 0, 0))
         sleep(0.5)
-        for event in sense.stick.get_events():
-        # Check if the joystick was pressed
-            if event.action == "pressed":
-                # Check which direction
-                if event.direction == "up":
-                     sense.show_letter("U")      # Up arrow
-                elif event.direction == "down":
-                     sense.show_letter("D")      # Down arrow
-                elif event.direction == "left": 
-                     sense.show_letter("L")      # Left arrow
-                elif event.direction == "right":
-                     sense.show_letter("R")      # Right arrow
-                elif event.direction == "middle":
-                     sense.show_letter("M")      # Enter key
-                     looper = False
+    for event in sense.stick.get_events():
+    # Check if the joystick was pressed
+        if event.action == "pressed":
+            # Check which direction
+            if event.direction == "up":
+                sense.show_letter("U")      # Up arrow
+            elif event.direction == "down":
+                sense.show_letter("D")      # Down arrow
+            elif event.direction == "left": 
+                sense.show_letter("L")      # Left arrow
+            elif event.direction == "right":
+                sense.show_letter("R")      # Right arrow
+            elif event.direction == "middle":
+                sense.show_letter("M")      # Enter key
+                looper = False
         # Wait a while and then clear the screen
         sleep(0.5)
         sense.clear()
@@ -157,5 +157,5 @@ while mazelooper:
                         rodX += 1
     if rodX == saveX and rodY == saveY:
         if rodn == 6:
-            sense.show_message("Yippy!! All save Well Done!!")
+            sense.show_message("Yippy!! safe", text_colour=[0,100,0])
             mazelooper= False
