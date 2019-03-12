@@ -2,16 +2,21 @@ from sense_hat import SenseHat
 from time import sleep
 
 sense = SenseHat()
-dx = 0
-dy = 0
+import random
+mx = 8; my = 8 # width and height of the maze
+maze = [[0 for x in range(mx)] for y in range(my)]
+dx = [0, 1, 0, -1]; dy = [-1, 0, 1, 0] # 4 directions to move in the maze
+color = [(125,125,125), (0, 0, 0)] # RGB colors of the maze
+   
+(rodX,rodY) = (0, 0)
+rodn = 0
+(saveX, saveY) = (0, 0)
 x = 0
 looper = True
+mazelooper = False
 while looper:
     acceleration = sense.get_accelerometer_raw()
-    if x != 0:
-        dx = x - acceleration['x']
-        dy = y - acceleration['y']
-        print(dx,dy)
+
     x = acceleration['x']
     y = acceleration['y']
     z = acceleration['z']
@@ -43,38 +48,24 @@ while looper:
     # Check if the joystick was pressed
         if event.action == "pressed":
             # Check which direction
-            if event.direction == "up":
-                sense.show_letter("U")      # Up arrow
-            elif event.direction == "down":
-                sense.show_letter("D")      # Down arrow
-            elif event.direction == "left": 
-                sense.show_letter("L")      # Left arrow
-            elif event.direction == "right":
-                sense.show_letter("R")      # Right arrow
-            elif event.direction == "middle":
-                sense.show_letter("M")      # Enter key
-                looper = False
-        # Wait a while and then clear the screen
-        sleep(0.5)
-        sense.clear()
+            if event.direction == "middle":
+              
+              if mazelooper:
+                mazelooper = False
+              else:
+                mazelooper = True
+                
+              # Wait a while and then clear the screen
+              sleep(0.5)
+              sense.clear()
 
-# Random Maze Generator using Depth-first Search
-# http://en.wikipedia.org/wiki/Maze_generation_algorithm
-# FB - 20121214
-import random
-mx = 8; my = 8 # width and height of the maze
-maze = [[0 for x in range(mx)] for y in range(my)]
-dx = [0, 1, 0, -1]; dy = [-1, 0, 1, 0] # 4 directions to move in the maze
-color = [(125,125,125), (0, 0, 0)] # RGB colors of the maze
+    # Random Maze Generator using Depth-first Search
+    # http://en.wikipedia.org/wiki/Maze_generation_algorithm
+    # FB - 20121214
 
-rodX = 0
-rodY = 0
-rodn = 0
-saveX = 0
-saveY = 0
-mazelooper = True
-while mazelooper:
-    if rodX == saveX and rodY == saveY:
+    if mazelooper:
+      # if new maze is needed
+      if rodX == saveX and rodY == saveY:
         rodX = 0
         rodY = 0
         rodn += 1
@@ -112,10 +103,8 @@ while mazelooper:
                     (saveX, saveY) = stack.pop()
                 else:
                     stack.pop()
-                    
-
-    sleep(0.3)
-    for ky in range(my):
+      # draw maze
+      for ky in range(my):
         for kx in range(mx):
             if rodX == kx and rodY == ky:
                 sense.set_pixel(rodX,  rodY,  (125,0,0))
@@ -124,19 +113,19 @@ while mazelooper:
             else:
                 sense.set_pixel(kx, ky, color[maze[ky][kx]])
 
-    sleep(0.1)
-    sense.set_pixel(rodX,  rodY,  (94, 55, 0))
-    sleep(0.1)
-    sense.set_pixel(rodX,  rodY,  (0, 55, 94))
-    sleep(0.1)
-    sense.set_pixel(rodX,  rodY,  (0, 0, 125))
-    sleep(0.1)
-    sense.set_pixel(rodX,  rodY,  (0, 55, 94))
-    sleep(0.1)
-    sense.set_pixel(rodX,  rodY,  (94, 55, 0))
+      sleep(0.1)
+      sense.set_pixel(rodX,  rodY,  (94, 55, 0))
+      sleep(0.1)
+      sense.set_pixel(rodX,  rodY,  (0, 55, 94))
+      sleep(0.1)
+      sense.set_pixel(rodX,  rodY,  (0, 0, 125))
+      sleep(0.2)
+      sense.set_pixel(rodX,  rodY,  (0, 55, 94))
+      sleep(0.1)
+      sense.set_pixel(rodX,  rodY,  (94, 55, 0))
 
-    for event in sense.stick.get_events():
-    # Check if the joystick was pressed
+      for event in sense.stick.get_events():
+      # Check if the joystick was pressed
         if event.action == "pressed":
             # Check which direction
             if event.direction == "up":
@@ -155,7 +144,13 @@ while mazelooper:
                 if rodX <= 6:
                     if maze[rodY][rodX + 1] == 1: 
                         rodX += 1
-    if rodX == saveX and rodY == saveY:
+            elif event.direction == "middle":
+              if mazelooper:
+                mazelooper = False
+              else:
+                mazelooper = True
+                
+      if rodX == saveX and rodY == saveY:
         if rodn == 6:
             sense.show_message("Yippy!! safe", text_colour=[0,100,0])
-            mazelooper= False
+            rodn = 0
