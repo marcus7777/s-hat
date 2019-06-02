@@ -1,156 +1,299 @@
+# !/usr/bin/python
+# -*- coding: utf-8 -*-
 from sense_hat import SenseHat
-from time import sleep
-
+import time
+import inputs
 sense = SenseHat()
+
+import threading, queue
 import random
-mx = 8; my = 8 # width and height of the maze
+
+mx = 8  # width and height of the maze
+my = 8
 maze = [[0 for x in range(mx)] for y in range(my)]
-dx = [0, 1, 0, -1]; dy = [-1, 0, 1, 0] # 4 directions to move in the maze
-color = [(125,125,125), (0, 0, 0)] # RGB colors of the maze
-   
-(rodX,rodY) = (0, 0)
-rodn = 0
+dx = [0, 1, 0, -1]  # 4 directions to move in the maze
+dy = [-1, 0, 1, 0]
+color = [(125, 125, 125), (0, 0, 0)]  # RGB colors of the maze
+
+red = (255, 0, 0)
+blue = (0, 0, 255)
+green = (0, 255, 0)
+white = (255, 255, 255)
+yellow = (255, 255, 0)
+purple = (255,0, 255)
+
+(rodX, rodY) = (0, 0)
+rodn = 1
 (saveX, saveY) = (0, 0)
-x = 0
 looper = True
 mazelooper = False
-while looper:
-    acceleration = sense.get_accelerometer_raw()
+size = 2
+(offsetX, offsetY) = (0, 0)
 
-    x = acceleration['x']
-    y = acceleration['y']
-    z = acceleration['z']
+CountingStartedAt = 0
 
-    r = int((x * 255) + 128)
-    g = int((y * 255) + 128)
-    b = int((z * 255) + 128)
-    if r < 0   : r = 0
-    if g < 0   : g = 0
-    if b < 0   : b = 0
-    if r > 255 : r = 255
-    if g > 255 : g = 255
-    if b > 255 : b = 255
+def drawBox(a, b, x, y):
+  for dbX in range(x - a):
+    for dbY in range(y - b):
+      sense.set_pixel(a + dbX, b + dbY, red)
+def later(event, sleep):
+    return event + sleep < time.time()
 
-    j = int((x * 7) + 4)
-    q = int((y * 7) + 4)
+state = "Startup"
+# state = "Counting"
+# state = "Showing"
+# state = "Maze"
+# state = "End Game"
+#
 
-    if j >= 0 and q >= 0 and j < 6 and q < 6:
-        print(q, j, (255-r,255-g,255-b))
-        sense.clear((r, g, b))
-        sense.set_pixel(q, j, (255-r,255-g,255-b))
-        sense.set_pixel(q+1, j, (255-r,255-g,255-b))
-        sense.set_pixel(q, j+1, (255-r,255-g,255-b))
-        sense.set_pixel(q+1, j+1, (255-r,255-g,255-b))
+pads = inputs.devices.gamepads
+
+def get_input(pads, user_input):
+      if len(pads) == 0:
+        events = []
+      else:
+        events = inputs.get_gamepad()
+
+      print(len(events))
+      if len(events) > 0:
+        for event in events:
+          if event.ev_type == "Key" and event.state == 1:
+            if event.code == "BTN_THUMB":
+              user_input.append("Red 1")
+            if event.code == "BTN_PINKIE":
+              user_input.append("Green 2")
+            if event.code == "BTN_BASE2":
+              user_input.append("Blue 3")
+            if event.code == "BTN_TRIGGER":
+              user_input.append("Yellow 4")
+            if event.code == "BTN_TOP2":
+              user_input.append("Pink 5")
+            if event.code == "BTN_BASE":
+              user_input.append("Purple 6")
+            if event.code == "BTN_THUMB2":
+              user_input.append("Left side")
+            if event.code == "BTN_BASE3":
+              user_input.append("Right side")
+            if event.code == "BTN_TOP":
+              user_input.append("Front")
+
+          elif event.ev_type == "Absolute" and event.state == 0 or event.state == 255:
+            if event.code == "ABS_Y":
+              if event.state == 0:
+                user_input.append("Up")
+              else:
+                user_input.append("Down")
+            elif event.code == "ABS_X":
+              if event.state == 0:
+                user_input.append("Left")
+              else:
+                user_input.append("Right")
+
+
+def play(pads, user_input, state):
+  while looper:
+    if len(user_input) > 0:
+      if user_input[len(user_input)-1] == "Red 1" :
+          Startup = False
+      elif user_input[len(user_input)-1] == "Green 2" :
+        if state == "Startup" :
+          state = "Counting"
+          CountingStartedAt = time.time()
+      elif user_input[len(user_input)-1] == "Blue 3" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Yellow 4" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Pink 5" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Purple 6" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Left side" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Right side" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Front" :
+          Startup = False
+
+      elif user_input[len(user_input)-1] == "Up" :
+          if rodY >= 1:
+            if maze[rodY - 1][rodX] == 1:
+              rodY -= 1
+      elif user_input[len(user_input)-1] == "Down" :
+          if rodY <= 6:
+            if maze[rodY + 1][rodX] == 1:
+              rodY += 1
+      elif user_input[len(user_input)-1] == "Left" :
+          if rodX >= 1:
+            if maze[rodY][rodX - 1] == 1:
+              rodX -= 1
+      elif user_input[len(user_input)-1] == "Right" :
+          if rodX <= 6:
+            if maze[rodY][rodX + 1] == 1:
+              rodX += 1
+
+    if state == 'Startup':
+      sleep(.2)
+      sense.clear()
+      drawBox(0,random.randint(2, 7),7,7)
     else:
+      acceleration = sense.get_accelerometer_raw()
+      x = acceleration['x'] - offsetX
+      y = acceleration['y'] - offsetY
+
+      j = int(x * 7 + 4)
+      q = int(y * 7 + 4)
+      if j >= 0 and q >= 0 and j < 8 - size and q < 8 - size:
+        sense.clear()
+        drawBox(j, q, j + size, q + size)
+      else:
         sense.clear((255, 0, 0))
         sleep(0.5)
-    for event in sense.stick.get_events():
-    # Check if the joystick was pressed
-        if event.action == "pressed":
-            # Check which direction
-            if event.direction == "middle":
-              
-              if mazelooper:
-                mazelooper = False
-              else:
-                mazelooper = True
-                
-              # Wait a while and then clear the screen
-              sleep(0.5)
-              sense.clear()
+        size += 1
+        (offsetX,offsetY) = (x,y)
+        if size > 5:
+          size = 2
 
-    # Random Maze Generator using Depth-first Search
-    # http://en.wikipedia.org/wiki/Maze_generation_algorithm
-    # FB - 20121214
+ 
+    if state == "Counting":
 
-    if mazelooper:
+      i = 2
+      if CountingStartedAt + (i * 1) > time.time():
+        sense.show_letter("9", red)
+      elif CountingStartedAt + (i * 2) > time.time():
+        sense.show_letter("8", blue)
+      elif CountingStartedAt + (i * 3) > time.time():
+        sense.show_letter("7", green)
+      elif CountingStartedAt + (i * 4) > time.time():
+        sense.show_letter("6", white)
+      elif CountingStartedAt + (i * 5) > time.time():
+        sense.show_letter("5", yellow)
+      elif CountingStartedAt + (i * 6) > time.time():
+        sense.show_letter("4", red)
+      elif CountingStartedAt + (i * 7) > time.time():
+        sense.show_letter("3", blue)
+      elif CountingStartedAt + (i * 8) > time.time():
+        sense.show_letter("2", green)
+      elif CountingStartedAt + (i * 9) > time.time():
+        sense.show_letter("1", white)
+      elif CountingStartedAt + (i * 10) > time.time():
+        sense.show_letter("0", yellow)
+      elif CountingStartedAt + (i * 20) > time.time():
+        state = "Showing"
+      #test for code
+
+    elif state == "Showing":
+      sense.clear()
+      sense.set_pixel(1,1,green)
+      sense.set_pixel(1,2,green)
+      sense.set_pixel(1,3,green)
+      sense.set_pixel(1,4,green)
+      sense.set_pixel(1,5,green)
+      sense.set_pixel(1,6,green)
+      sense.set_pixel(1,7,green)
+      sense.set_pixel(2,2,green)
+      sense.set_pixel(2,3,green)
+      sense.set_pixel(2,4,green)
+      sense.set_pixel(2,5,green)
+      sense.set_pixel(2,6,green)
+      sense.set_pixel(2,7,green)
+      sense.set_pixel(3,3,green)
+      sense.set_pixel(3,4,green)
+      sense.set_pixel(3,5,green)
+      sense.set_pixel(3,6,green)
+      sense.set_pixel(3,7,green)
+      sense.set_pixel(4,4,green)
+      sense.set_pixel(4,5,green)
+      sense.set_pixel(4,6,green)
+      sense.set_pixel(4,7,green)
+      sense.set_pixel(5,5,green)
+      sense.set_pixel(5,6,green)
+      sense.set_pixel(5,7,green)
+      sense.set_pixel(6,6,green)
+      sense.set_pixel(6,7,green)
+      sense.set_pixel(7,7,green)
+  
+    elif state == "Maze":
       # if new maze is needed
       if rodX == saveX and rodY == saveY:
         rodX = 0
         rodY = 0
         rodn += 1
-        sense.show_message("Save rod" + str(rodn) +  ":")
+
         # start the maze from a random cell
+
         stack = [(random.randint(0, mx - 1), random.randint(0, my - 1))]
         maze = [[0 for x in range(mx)] for y in range(my)]
         (rodX, rodY) = stack[-1]
 
-        (saveX, saveY) = (7,7)
+        (saveX, saveY) = (7, 7)
         while len(stack) > 0:
-            print(stack[-1])
-            (cx, cy) = stack[-1]
-            maze[cy][cx] = 1
-            # find a new cell to add
-            nlst = [] # list of available neighbors
-            for i in range(4):
-                nx = cx + dx[i]; ny = cy + dy[i]
-                if nx >= 0 and nx < mx and ny >= 0 and ny < my:
-                    if maze[ny][nx] == 0:
-                        # of occupied neighbors must be 1
-                        ctr = 0
-                        for j in range(4):
-                            ex = nx + dx[j]; ey = ny + dy[j]
-                            if ex >= 0 and ex < mx and ey >= 0 and ey < my:
-                                if maze[ey][ex] == 1: ctr += 1
-                        if ctr == 1: nlst.append(i)
-            # if 1 or more neighbors available then randomly select one and move
-            if len(nlst) > 0:
-                ir = nlst[random.randint(0, len(nlst) - 1)]
-                cx += dx[ir]; cy += dy[ir]
-                stack.append((cx, cy))
+          (cx, cy) = stack[-1]
+          maze[cy][cx] = 1
+
+          # find a new cell to add
+
+          nlst = []  # list of available neighbors
+          for i in range(4):
+            nx = cx + dx[i]
+            ny = cy + dy[i]
+            if nx >= 0 and nx < mx and ny >= 0 and ny < my:
+              if maze[ny][nx] == 0:
+
+              # of occupied neighbors must be 1
+
+                ctr = 0
+                for j in range(4):
+                  ex = nx + dx[j]
+                  ey = ny + dy[j]
+                  if ex >= 0 and ex < mx and ey >= 0 and ey < my:
+                    if maze[ey][ex] == 1:
+                      ctr += 1
+                if ctr == 1:
+                  nlst.append(i)
+
+        # if 1 or more neighbors available then randomly select one and move
+
+          if len(nlst) > 0:
+            ir = nlst[random.randint(0, len(nlst) - 1)]
+            cx += dx[ir]
+            cy += dy[ir]
+            stack.append((cx, cy))
+          else:
+            if (saveX, saveY) == (7, 7):
+              (saveX, saveY) = stack.pop()
             else:
-                if (saveX, saveY) == (7,7): 
-                    (saveX, saveY) = stack.pop()
-                else:
-                    stack.pop()
-      # draw maze
+              stack.pop()
+
+    # draw maze
+
       for ky in range(my):
         for kx in range(mx):
-            if rodX == kx and rodY == ky:
-                sense.set_pixel(rodX,  rodY,  (125,0,0))
-            elif saveX == kx and saveY == ky:
-                sense.set_pixel(saveX, saveY, (0,125,0))
-            else:
-                sense.set_pixel(kx, ky, color[maze[ky][kx]])
+          if rodX == kx and rodY == ky:
+            sense.set_pixel(rodX, rodY, red)
+          elif saveX == kx and saveY == ky:
+            sense.set_pixel(saveX, saveY, (0, 125, 0))
+          else:
+            sense.set_pixel(kx, ky, color[maze[ky][kx]])
 
-      sleep(0.1)
-      sense.set_pixel(rodX,  rodY,  (94, 55, 0))
-      sleep(0.1)
-      sense.set_pixel(rodX,  rodY,  (0, 55, 94))
-      sleep(0.1)
-      sense.set_pixel(rodX,  rodY,  (0, 0, 125))
-      sleep(0.2)
-      sense.set_pixel(rodX,  rodY,  (0, 55, 94))
-      sleep(0.1)
-      sense.set_pixel(rodX,  rodY,  (94, 55, 0))
-
-      for event in sense.stick.get_events():
-      # Check if the joystick was pressed
-        if event.action == "pressed":
-            # Check which direction
-            if event.direction == "up":
-                if rodY >= 1:
-                    if maze[rodY-1][rodX] == 1: 
-                        rodY -= 1
-            elif event.direction == "down":
-                if rodY <= 6:
-                    if maze[rodY+1][rodX] == 1:
-                        rodY += 1
-            elif event.direction == "left": 
-                if rodX >= 1:
-                    if maze[rodY][rodX - 1] == 1: 
-                        rodX -= 1
-            elif event.direction == "right":
-                if rodX <= 6:
-                    if maze[rodY][rodX + 1] == 1: 
-                        rodX += 1
-            elif event.direction == "middle":
-              if mazelooper:
-                mazelooper = False
-              else:
-                mazelooper = True
-                
       if rodX == saveX and rodY == saveY:
-        if rodn == 6:
-            sense.show_message("Yippy!! safe", text_colour=[0,100,0])
-            rodn = 0
+        state = "End Game"
+
+    elif state == 'End Game':
+
+          Startup = False
+
+         
+         
+user_input = queue.Queue()
+thread1 = threading.Thread(target=get_input,args=(pads, user_input))
+thread2 = threading.Thread(target=play,args=(pads, user_input, state))
+print('setup')
+thread1.start()
+thread2.start()
+print("Started")
