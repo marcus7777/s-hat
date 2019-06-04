@@ -2,18 +2,61 @@
 # -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 import time
-import inputs
+from time import sleep
 sense = SenseHat()
 
 import threading, queue
 import random
+import inputs
 
-mx = 8  # width and height of the maze
-my = 8
-maze = [[0 for x in range(mx)] for y in range(my)]
-dx = [0, 1, 0, -1]  # 4 directions to move in the maze
-dy = [-1, 0, 1, 0]
-color = [(125, 125, 125), (0, 0, 0)]  # RGB colors of the maze
+def drawBox(a, b, x, y):
+  for dbX in range(x - a):
+    for dbY in range(y - b):
+      sense.set_pixel(a + dbX, b + dbY, red)
+
+
+def get_input(user_input, inputs):
+  while True:
+      pads = inputs.devices.gamepads
+      if len(pads) == 0:
+        events = []
+      else:
+        events = inputs.get_gamepad()
+
+      if len(events) > 0:
+        for event in events:
+          if event.ev_type == "Key" and event.state == 1:
+            if event.code == "BTN_THUMB":
+              user_input.put("Red 1")
+            if event.code == "BTN_PINKIE":
+              user_input.put("Green 2")
+            if event.code == "BTN_BASE2":
+              user_input.put("Blue 3")
+            if event.code == "BTN_TRIGGER":
+              user_input.put("Yellow 4")
+            if event.code == "BTN_TOP2":
+              user_input.put("Pink 5")
+            if event.code == "BTN_BASE":
+              user_input.put("Purple 6")
+            if event.code == "BTN_THUMB2":
+              user_input.put("Left side")
+            if event.code == "BTN_BASE3":
+              user_input.put("Right side")
+            if event.code == "BTN_TOP":
+              user_input.put("Front")
+
+          elif event.ev_type == "Absolute" and event.state == 0 or event.state == 255:
+            if event.code == "ABS_Y":
+              if event.state == 0:
+                user_input.put("Up")
+              else:
+                user_input.put("Down")
+            elif event.code == "ABS_X":
+              if event.state == 0:
+                user_input.put("Left")
+              else:
+                user_input.put("Right")
+
 
 red = (255, 0, 0)
 blue = (0, 0, 255)
@@ -21,118 +64,94 @@ green = (0, 255, 0)
 white = (255, 255, 255)
 yellow = (255, 255, 0)
 purple = (255,0, 255)
-
-(rodX, rodY) = (0, 0)
-rodn = 1
-(saveX, saveY) = (0, 0)
-looper = True
-mazelooper = False
-size = 2
-(offsetX, offsetY) = (0, 0)
-
-CountingStartedAt = 0
-
-def drawBox(a, b, x, y):
-  for dbX in range(x - a):
-    for dbY in range(y - b):
-      sense.set_pixel(a + dbX, b + dbY, red)
-def later(event, sleep):
-    return event + sleep < time.time()
-
-state = "Startup"
+def play(user_input,inputs):
+  
+  state = "Startup"
 # state = "Counting"
 # state = "Showing"
 # state = "Maze"
 # state = "End Game"
-#
 
-pads = inputs.devices.gamepads
+  mx = 8  # width and height of the maze
+  my = 8
+  maze = [[0 for x in range(mx)] for y in range(my)]
+  dx = [0, 1, 0, -1]  # 4 directions to move in the maze
+  dy = [-1, 0, 1, 0]
+  color = [(125, 125, 125), (0, 0, 0)]  # RGB colors of the maze
 
-def get_input(pads, user_input):
-      if len(pads) == 0:
-        events = []
-      else:
-        events = inputs.get_gamepad()
+  (rodX, rodY) = (0, 0)
+  rodn = 1
+  (saveX, saveY) = (0, 0)
+  size = 2
+  (offsetX, offsetY) = (0, 0)
 
-      print(len(events))
-      if len(events) > 0:
-        for event in events:
-          if event.ev_type == "Key" and event.state == 1:
-            if event.code == "BTN_THUMB":
-              user_input.append("Red 1")
-            if event.code == "BTN_PINKIE":
-              user_input.append("Green 2")
-            if event.code == "BTN_BASE2":
-              user_input.append("Blue 3")
-            if event.code == "BTN_TRIGGER":
-              user_input.append("Yellow 4")
-            if event.code == "BTN_TOP2":
-              user_input.append("Pink 5")
-            if event.code == "BTN_BASE":
-              user_input.append("Purple 6")
-            if event.code == "BTN_THUMB2":
-              user_input.append("Left side")
-            if event.code == "BTN_BASE3":
-              user_input.append("Right side")
-            if event.code == "BTN_TOP":
-              user_input.append("Front")
+  CountingStartedAt = 0
+  
+  code = [5, 6, 4, 2]
 
-          elif event.ev_type == "Absolute" and event.state == 0 or event.state == 255:
-            if event.code == "ABS_Y":
-              if event.state == 0:
-                user_input.append("Up")
-              else:
-                user_input.append("Down")
-            elif event.code == "ABS_X":
-              if event.state == 0:
-                user_input.append("Left")
-              else:
-                user_input.append("Right")
-
-
-def play(pads, user_input, state):
-  while looper:
-    if len(user_input) > 0:
-      if user_input[len(user_input)-1] == "Red 1" :
-          Startup = False
-      elif user_input[len(user_input)-1] == "Green 2" :
+  while True:
+    if user_input.empty():
+      inputed = ""
+    else:
+      inputed = user_input.get()
+      if inputed == "Red 1" :
+          print(1)
+      elif inputed == "Green 2" :
         if state == "Startup" :
           state = "Counting"
           CountingStartedAt = time.time()
-      elif user_input[len(user_input)-1] == "Blue 3" :
-          Startup = False
+        if state == "Counting" and len(code) == 1:
+          code = []
+        else:
+          code = [5, 6, 4, 2]
+          
+      elif inputed == "Blue 3" :
+          print('3')
 
-      elif user_input[len(user_input)-1] == "Yellow 4" :
-          Startup = False
+      elif inputed == "Yellow 4" :
+        if state == "Counting" and len(code) == 2:
+          code = [2]
+        else:
+          code = [5, 6, 4, 2]
+          print(4)
 
-      elif user_input[len(user_input)-1] == "Pink 5" :
-          Startup = False
+      elif inputed == "Pink 5" :
+          print(5)
+        if state == "Counting" and len(code) == 4:
+          code = [6, 4, 2]
+        else:
+          code = [5, 6, 4, 2]
+  
 
-      elif user_input[len(user_input)-1] == "Purple 6" :
-          Startup = False
+      elif inputed == "Purple 6" :
+          print(6)
+        if state == "Counting" and len(code) == 3:
+          code = [4, 2]
+        else:
+          code = [5, 6, 4, 2]
 
-      elif user_input[len(user_input)-1] == "Left side" :
-          Startup = False
+      elif inputed == "Left side" :
+          print('l')
 
-      elif user_input[len(user_input)-1] == "Right side" :
-          Startup = False
+      elif inputed == "Right side" :
+          print('r')
 
-      elif user_input[len(user_input)-1] == "Front" :
-          Startup = False
+      elif inputed == "Front" :
+          print('f')
 
-      elif user_input[len(user_input)-1] == "Up" :
+    elif inputed == "Up" :
           if rodY >= 1:
             if maze[rodY - 1][rodX] == 1:
               rodY -= 1
-      elif user_input[len(user_input)-1] == "Down" :
+      elif inputed == "Down" :
           if rodY <= 6:
             if maze[rodY + 1][rodX] == 1:
               rodY += 1
-      elif user_input[len(user_input)-1] == "Left" :
+      elif inputed == "Left" :
           if rodX >= 1:
             if maze[rodY][rodX - 1] == 1:
               rodX -= 1
-      elif user_input[len(user_input)-1] == "Right" :
+      elif inputed == "Right" :
           if rodX <= 6:
             if maze[rodY][rodX + 1] == 1:
               rodX += 1
@@ -183,9 +202,10 @@ def play(pads, user_input, state):
         sense.show_letter("1", white)
       elif CountingStartedAt + (i * 10) > time.time():
         sense.show_letter("0", yellow)
-      elif CountingStartedAt + (i * 20) > time.time():
+      elif CountingStartedAt + (i * 200) > time.time():
         state = "Showing"
-      #test for code
+      if len(code) == 0:  
+        state = "Showing"
 
     elif state == "Showing":
       sense.clear()
@@ -217,7 +237,6 @@ def play(pads, user_input, state):
       sense.set_pixel(6,6,green)
       sense.set_pixel(6,7,green)
       sense.set_pixel(7,7,green)
-  
     elif state == "Maze":
       # if new maze is needed
       if rodX == saveX and rodY == saveY:
@@ -291,9 +310,9 @@ def play(pads, user_input, state):
          
          
 user_input = queue.Queue()
-thread1 = threading.Thread(target=get_input,args=(pads, user_input))
-thread2 = threading.Thread(target=play,args=(pads, user_input, state))
-print('setup')
+thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
+thread2 = threading.Thread(target=play,args=(user_input, inputs))
+print('Setup')
 thread1.start()
 thread2.start()
 print("Started")
