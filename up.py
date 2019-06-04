@@ -129,7 +129,8 @@ def play(user_input,inputs):
           code = [4, 2]
         else:
           code = [5, 6, 4, 2]
-
+        if state == "Showing":
+          state = "Maze"
       elif inputed == "Left side" :
           print('l')
 
