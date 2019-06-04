@@ -95,7 +95,7 @@ def play(user_input,inputs):
     else:
       inputed = user_input.get()
       if inputed == "Red 1" :
-          print(1)
+        print(1)
       elif inputed == "Green 2" :
         if state == "Startup" :
           state = "Counting"
@@ -106,7 +106,7 @@ def play(user_input,inputs):
           code = [5, 6, 4, 2]
           
       elif inputed == "Blue 3" :
-          print('3')
+        print('3')
 
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
@@ -116,7 +116,7 @@ def play(user_input,inputs):
           print(4)
 
       elif inputed == "Pink 5" :
-          print(5)
+        print(5)
         if state == "Counting" and len(code) == 4:
           code = [6, 4, 2]
         else:
@@ -124,7 +124,7 @@ def play(user_input,inputs):
   
 
       elif inputed == "Purple 6" :
-          print(6)
+        print(6)
         if state == "Counting" and len(code) == 3:
           code = [4, 2]
         else:
@@ -132,15 +132,13 @@ def play(user_input,inputs):
         if state == "Showing":
           state = "Maze"
       elif inputed == "Left side" :
-          print('l')
-
+        print('l')
       elif inputed == "Right side" :
-          print('r')
-
+        print('r')
       elif inputed == "Front" :
-          print('f')
+        print('f')
 
-    elif inputed == "Up" :
+      elif inputed == "Up" :
           if rodY >= 1:
             if maze[rodY - 1][rodX] == 1:
               rodY -= 1
