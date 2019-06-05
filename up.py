@@ -70,6 +70,7 @@ def play(user_input,inputs):
   state = "Startup"
 # state = "Ready"
 # state = "Set"
+# state = "Go"
 # state = "Counting"
 # state = "Showing"
 # state = "Maze"
@@ -97,12 +98,12 @@ def play(user_input,inputs):
       inputed = ""
     else:
       inputed = user_input.get()
-      if inputed == "Red 1" :
+      if inputed == "Red 1":
         print(1)
-      elif inputed == "Green 2" :
-        if state == "Set" :
+      elif inputed == "Green 2":
+        if state == "Set":
           state = "Go"
-        elif state == "Go" :
+        elif state == "Go":
           state = "Counting"
           CountingStartedAt = time.time()
         elif state == "Counting" and len(code) == 1:
@@ -212,7 +213,7 @@ def play(user_input,inputs):
       elif CountingStartedAt + (i * 10) > time.time():
         sense.show_letter("0", yellow)
       elif CountingStartedAt + (i * 200) > time.time():
-        state = "Showing"
+        state = "St"
       if len(code) == 0:  
         state = "Showing"
 
