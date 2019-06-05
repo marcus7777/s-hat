@@ -99,16 +99,16 @@ def play(user_input,inputs):
       inputed = user_input.get()
       if inputed == "Red 1" :
         print(1)
-        print(code)
       elif inputed == "Green 2" :
         if state == "Set" :
+          state = "Go"
+        elif state == "Go" :
           state = "Counting"
           CountingStartedAt = time.time()
-        if state == "Counting" and len(code) == 1:
+        elif state == "Counting" and len(code) == 1:
           code = []
         else:
           code = [5, 6, 4, 2]
-        print(code)
           
       elif inputed == "Blue 3" :
         print('3')
@@ -119,14 +119,12 @@ def play(user_input,inputs):
         else:
           code = [5, 6, 4, 2]
         print(4)
-        print(code)
       elif inputed == "Pink 5" :
         print(5)
         if state == "Counting" and len(code) == 4:
           code = [6, 4, 2]
         else:
           code = [5, 6, 4, 2]
-        print(code)
   
 
       elif inputed == "Purple 6" :
@@ -135,7 +133,7 @@ def play(user_input,inputs):
           code = [4, 2]
         else:
           code = [5, 6, 4, 2]
-        print(code)
+          
         if state == "Showing":
           state = "Maze"
       elif inputed == "Left side" :
@@ -190,7 +188,6 @@ def play(user_input,inputs):
         if size > 5:
           size = 2
 
- 
     if state == "Counting":
 
       i = 2
@@ -316,11 +313,8 @@ def play(user_input,inputs):
         state = "End Game"
 
     elif state == 'End Game':
-
           Startup = False
-
-         
-         
+        
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
