@@ -256,7 +256,7 @@ def play(user_input,inputs):
       sense.set_pixel(7,7,green)
     elif state == "Maze":
       # if new maze is needed
-      if rodX == 0 or rodY == 0 or rodX == 7 or rodY == 7:
+      if saveX == 0 or saveY == 0 or saveX == 7 or saveY == 7:
 
         # start the maze from a random cell
 
