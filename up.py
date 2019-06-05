@@ -167,7 +167,7 @@ def play(user_input,inputs):
             if maze[rodY][rodX + 1] == 1:
               rodX += 1
       
-      if rodX > 0 and state == "Maze" and rodX == saveX and rodY == saveY:
+      if rodX > 0 and rodY > 0 and state == "Maze" and rodX == saveX and rodY == saveY:
         state = "End Game"
     if state == 'Startup':
       sleep(.2)
@@ -253,7 +253,7 @@ def play(user_input,inputs):
       sense.set_pixel(7,7,green)
     elif state == "Maze":
       # if new maze is needed
-      if rodX == saveX and rodY == saveY:
+      if rodX = 0 and rodY = 0 and rodX == saveX and rodY == saveY:
         rodX = 0
         rodY = 0
         rodn += 1
