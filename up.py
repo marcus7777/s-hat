@@ -15,7 +15,6 @@ def drawBox(a, b, x, y):
     for dbY in range(y - b):
       sense.set_pixel(a + dbX, b + dbY, red)
 
-
 def get_input(user_input, inputs):
   while True:
       pads = inputs.devices.gamepads
@@ -100,12 +99,13 @@ def play(user_input,inputs):
       inputed = user_input.get()
       if inputed == "Red 1":
         print(1)
-      elif inputed == "Green 2":
-        if state == "Set":
-          state = "Go"
-        elif state == "Go":
+        if state == "Go":
           state = "Counting"
           CountingStartedAt = time.time()
+      elif inputed == "Green 2":
+        print(2)
+        if state == "Set":
+          state = "Go"
         elif state == "Counting" and len(code) == 1:
           code = []
         else:
