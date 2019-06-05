@@ -137,6 +137,9 @@ def play(user_input,inputs):
           
         if state == "Showing":
           state = "Maze"
+          rodX = 0
+          rodY = 0
+          
       elif inputed == "Left side" :
         print('l')
         if state == "Startup" :
@@ -253,10 +256,7 @@ def play(user_input,inputs):
       sense.set_pixel(7,7,green)
     elif state == "Maze":
       # if new maze is needed
-      if rodX = 0 and rodY = 0 and rodX == saveX and rodY == saveY:
-        rodX = 0
-        rodY = 0
-        rodn += 1
+      if rodX == 0 and rodY == 0 and rodX == saveX and rodY == saveY:
 
         # start the maze from a random cell
 
