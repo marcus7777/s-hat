@@ -170,7 +170,7 @@ def play(user_input,inputs):
             if maze[rodY][rodX + 1] == 1:
               rodX += 1
       
-      if rodX > 0 and rodY > 0 and state == "Maze" and rodX == saveX and rodY == saveY:
+      if (rodX > 0 or rodY > 0) and state == "Maze" and rodX == saveX and rodY == saveY:
         state = "End Game"
     if state == 'Startup':
       sleep(.2)
