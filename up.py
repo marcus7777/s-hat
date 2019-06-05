@@ -176,7 +176,7 @@ def play(user_input,inputs):
         (offsetX,offsetY) = (x,y)
         if size > 5:
           size = 2
-
+    print(code)
  
     if state == "Counting":
 
