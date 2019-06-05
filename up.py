@@ -188,9 +188,9 @@ def play(user_input,inputs):
         (offsetX,offsetY) = (x,y)
         if size > 5:
           size = 2
-
-    if state == "Counting":
-
+    if state == "Set":
+      sense.clear(green)
+    elif state == "Counting":
       i = 2
       if CountingStartedAt + (i * 1) > time.time():
         sense.show_letter("9", red)
