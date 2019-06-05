@@ -190,6 +190,8 @@ def play(user_input,inputs):
           size = 2
     if state == "Set":
       sense.clear(green)
+    elif state == "Go":
+      sense.show_letter("1")
     elif state == "Counting":
       i = 2
       if CountingStartedAt + (i * 1) > time.time():
