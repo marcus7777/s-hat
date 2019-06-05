@@ -1,4 +1,5 @@
 # !/usr/bin/python
+# -*- coding: utf-8 -*-# !/usr/bin/python
 # -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 import time
@@ -65,8 +66,10 @@ white = (255, 255, 255)
 yellow = (255, 255, 0)
 purple = (255,0, 255)
 def play(user_input,inputs):
-  
+#   
   state = "Startup"
+# state = "Ready"
+# state = "Set"
 # state = "Counting"
 # state = "Showing"
 # state = "Maze"
@@ -96,14 +99,16 @@ def play(user_input,inputs):
       inputed = user_input.get()
       if inputed == "Red 1" :
         print(1)
+        print(code)
       elif inputed == "Green 2" :
-        if state == "Startup" :
+        if state == "Set" :
           state = "Counting"
           CountingStartedAt = time.time()
         if state == "Counting" and len(code) == 1:
           code = []
         else:
           code = [5, 6, 4, 2]
+        print(code)
           
       elif inputed == "Blue 3" :
         print('3')
@@ -113,14 +118,15 @@ def play(user_input,inputs):
           code = [2]
         else:
           code = [5, 6, 4, 2]
-          print(4)
-
+        print(4)
+        print(code)
       elif inputed == "Pink 5" :
         print(5)
         if state == "Counting" and len(code) == 4:
           code = [6, 4, 2]
         else:
           code = [5, 6, 4, 2]
+        print(code)
   
 
       elif inputed == "Purple 6" :
@@ -129,12 +135,19 @@ def play(user_input,inputs):
           code = [4, 2]
         else:
           code = [5, 6, 4, 2]
+        print(code)
         if state == "Showing":
           state = "Maze"
       elif inputed == "Left side" :
         print('l')
+        if state == "Startup" :
+          state = "Ready"
       elif inputed == "Right side" :
         print('r')
+        if state == "Ready" :
+          state = "Set"
+          sense.clear(green)
+
       elif inputed == "Front" :
         print('f')
 
@@ -176,7 +189,7 @@ def play(user_input,inputs):
         (offsetX,offsetY) = (x,y)
         if size > 5:
           size = 2
-    print(code)
+
  
     if state == "Counting":
 
