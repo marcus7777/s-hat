@@ -318,7 +318,5 @@ def play(user_input,inputs):
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
-print('Setup')
 thread1.start()
 thread2.start()
-print("Started")
