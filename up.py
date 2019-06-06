@@ -325,7 +325,14 @@ def play(user_input, inputs):
 
     elif state == 'End Game':
       text = "data"
-      sense.show_message("Safe" , text_colour=green)
+      if len(theSequence) > 0:
+        if theSequence[0][2]:
+          ssense.show_letter(theSequence[0][0], theSequence[0][1] )
+        else:
+          sense.clear(theSequence[0][0])
+      else
+        sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
+        state = 'Startup'  
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
