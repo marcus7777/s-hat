@@ -64,7 +64,7 @@ white = (255, 255, 255)
 yellow = (255, 255, 0)
 purple = (255,0, 255)
 def play(user_input,inputs):
-#   
+  
   state = "Startup"
 # state = "Ready"
 # state = "Set"
@@ -72,6 +72,7 @@ def play(user_input,inputs):
 # state = "Counting"
 # state = "Showing"
 # state = "Maze"
+# state = "Maze End"
 # state = "End Game"
 
   mx = 8  # width and height of the maze
@@ -110,9 +111,10 @@ def play(user_input,inputs):
         else:
           code = [5, 6, 4, 2]
           
-      elif inputed == "Blue 3" :
-        print('3')
-
+      elif inputed == "Blue 3":
+        print(3)
+        if state == "Maze End":
+          state == "End Game":
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
           code = [2]
@@ -173,7 +175,7 @@ def play(user_input,inputs):
               rodX += 1
       
       if (rodX > 0 or rodY > 0) and state == "Maze" and rodX == saveX and rodY == saveY:
-        state = "End Game"
+        state = "Maze End"
     if state == 'Startup':
       sleep(.2)
       sense.clear()
@@ -222,7 +224,7 @@ def play(user_input,inputs):
       elif CountingStartedAt + (i * 10) > time.time():
         sense.show_letter("0", yellow)
       elif CountingStartedAt + (i * 11) > time.time():
-        state = "Bang!"
+        state = "Startup"
       if len(code) == 0:  
         state = "Showing"
 
