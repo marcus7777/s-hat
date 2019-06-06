@@ -114,7 +114,7 @@ def play(user_input,inputs):
       elif inputed == "Blue 3":
         print(3)
         if state == "Maze End":
-          state == "End Game":
+          state = "End Game"
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
           code = [2]
