@@ -21,7 +21,7 @@ def get_input(user_input, inputs):
         events = inputs.get_gamepad()
       except:
         sense.show_message(".")
-        #sys.exit()
+        
       if len(events) > 0:
         for event in events:
           if event.ev_type == "Key" and event.state == 1:
@@ -62,7 +62,7 @@ green = (0, 255, 0)
 white = (255, 255, 255)
 yellow = (255, 255, 0)
 purple = (255,0, 255)
-def play(user_input,inputs):
+def play(user_input, inputs):
   
   state = "Startup"
 # state = "Ready"
@@ -116,7 +116,7 @@ def play(user_input,inputs):
           state = "End Game"
           colours = [red,blue,green,white,yellow,purple]
           numbers = [1,2,3,4,5,6]
-          for i = 0 to 9:
+          for i in range(9):
             theSequence.put([random.choice(colours), random.choice(numbers), random.choice([0,1])]
           print(theSequence)
       elif inputed == "Yellow 4" :
