@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 import time
+
+import sys
 from time import sleep
 sense = SenseHat()
 
