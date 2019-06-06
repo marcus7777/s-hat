@@ -19,7 +19,7 @@ pads = inputs.devices.gamepads
 if len(pads) == 0:
   events = []
   sense.show_message("plug in controller ... then unplug")
-  break
+  sys.exit()
   
 def get_input(user_input, inputs):
   while True:
