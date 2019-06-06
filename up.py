@@ -19,14 +19,15 @@ def drawBox(a, b, x, y):
 
 pads = inputs.devices.gamepads
 if len(pads) == 0:
-  events = []
-  sense.show_message("plug in controller ... then unplug")
+  sense.show_message("plug in controller ...")
   sys.exit()
   
 def get_input(user_input, inputs):
   while True:
-      events = inputs.get_gamepad()
-
+      try:
+        events = inputs.get_gamepad()
+      except:
+        sys.exit()
       if len(events) > 0:
         for event in events:
           if event.ev_type == "Key" and event.state == 1:
