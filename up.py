@@ -27,7 +27,7 @@ def get_input(user_input, inputs):
       try:
         events = inputs.get_gamepad()
       except:
-        #sense.show_message("plug in controller ...")
+        sense.show_message(".")
         #sys.exit()
       if len(events) > 0:
         for event in events:
