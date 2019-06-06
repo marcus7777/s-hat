@@ -90,7 +90,7 @@ def play(user_input, inputs):
   CountingStartedAt = 0
   
   code = [5, 6, 4, 2]
-
+  theSequence = []
   while True:
     if user_input.empty():
       inputed = ""
