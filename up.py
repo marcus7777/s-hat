@@ -3,7 +3,7 @@
 from sense_hat import SenseHat
 import time
 
-import sys
+#import sys
 from time import sleep
 sense = SenseHat()
 
@@ -27,8 +27,8 @@ def get_input(user_input, inputs):
       try:
         events = inputs.get_gamepad()
       except:
-        sense.show_message("plug in controller ...")
-        sys.exit()
+        #sense.show_message("plug in controller ...")
+        #sys.exit()
       if len(events) > 0:
         for event in events:
           if event.ev_type == "Key" and event.state == 1:
