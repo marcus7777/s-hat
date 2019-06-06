@@ -1,5 +1,4 @@
 # !/usr/bin/python
-# -*- coding: utf-8 -*-# !/usr/bin/python
 # -*- coding: utf-8 -*-
 from sense_hat import SenseHat
 import time
@@ -152,7 +151,10 @@ def play(user_input,inputs):
 
       elif inputed == "Front" :
         print('f')
-
+        if state.endswith('~'):
+          state = state[:-1]
+        else:
+          state = state + "~"
       elif inputed == "Up" :
           if rodY >= 1:
             if maze[rodY - 1][rodX] == 1:
@@ -219,8 +221,8 @@ def play(user_input,inputs):
         sense.show_letter("1", white)
       elif CountingStartedAt + (i * 10) > time.time():
         sense.show_letter("0", yellow)
-      elif CountingStartedAt + (i * 200) > time.time():
-        state = "St"
+      elif CountingStartedAt + (i * 11) > time.time():
+        state = "Bang!"
       if len(code) == 0:  
         state = "Showing"
 
