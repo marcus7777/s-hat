@@ -56,7 +56,6 @@ def get_input(user_input, inputs):
               else:
                 user_input.put("Right")
 
-
 red = (255, 0, 0)
 blue = (0, 0, 255)
 green = (0, 255, 0)
@@ -115,6 +114,10 @@ def play(user_input,inputs):
         print(3)
         if state == "Maze End":
           state = "End Game"
+          colours = [red,blue,green,white,yellow,purple]
+          numbers = [1,2,3,4,5,6]
+          theSequence = [random.choice(colours), random.choice(colours), random.choice(colours), random.choice(colours)]
+          print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
           code = [2]
@@ -320,8 +323,8 @@ def play(user_input,inputs):
             sense.set_pixel(kx, ky, color[maze[ky][kx]])
 
     elif state == 'End Game':
-          Startup = False
-        
+      text = "data"
+      sense.show_message("Safe" , text_colour=green)
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
