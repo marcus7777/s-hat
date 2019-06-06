@@ -330,7 +330,7 @@ def play(user_input, inputs):
           ssense.show_letter(theSequence[0][0], theSequence[0][1] )
         else:
           sense.clear(theSequence[0][0])
-      else
+      else:
         sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
         state = 'Startup'  
 user_input = queue.Queue()
