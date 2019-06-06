@@ -17,16 +17,17 @@ def drawBox(a, b, x, y):
       sense.set_pixel(a + dbX, b + dbY, red)
 
 
-pads = inputs.devices.gamepads
-if len(pads) == 0:
-  sense.show_message("plug in controller ...")
-  sys.exit()
+#pads = inputs.devices.gamepads
+#if len(pads) == 0:
+#  sense.show_message("plug in controller ...")
+#  sys.exit()
   
 def get_input(user_input, inputs):
   while True:
       try:
         events = inputs.get_gamepad()
       except:
+        sense.show_message("plug in controller ...")
         sys.exit()
       if len(events) > 0:
         for event in events:
