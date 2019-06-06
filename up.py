@@ -116,7 +116,8 @@ def play(user_input,inputs):
           state = "End Game"
           colours = [red,blue,green,white,yellow,purple]
           numbers = [1,2,3,4,5,6]
-          theSequence = [random.choice(colours), random.choice(colours), random.choice(colours), random.choice(colours)]
+          for i = 0 to 9:
+            theSequence.put([random.choice(colours), random.choice(numbers), random.choice([0,1])]
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
