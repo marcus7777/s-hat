@@ -3,7 +3,6 @@
 from sense_hat import SenseHat
 import time
 
-#import sys
 from time import sleep
 sense = SenseHat()
 
@@ -15,13 +14,7 @@ def drawBox(a, b, x, y):
   for dbX in range(x - a):
     for dbY in range(y - b):
       sense.set_pixel(a + dbX, b + dbY, red)
-
-
-#pads = inputs.devices.gamepads
-#if len(pads) == 0:
-#  sense.show_message("plug in controller ...")
-#  sys.exit()
-  
+      
 def get_input(user_input, inputs):
   while True:
       try:
@@ -183,6 +176,7 @@ def play(user_input,inputs):
       
       if (rodX > 0 or rodY > 0) and state == "Maze" and rodX == saveX and rodY == saveY:
         state = "Maze End"
+      print(state)
     if state == 'Startup':
       sleep(.2)
       sense.clear()
