@@ -117,7 +117,7 @@ def play(user_input, inputs):
           colours = [red,blue,green,white,yellow,purple]
           numbers = [1,2,3,4,5,6]
           for i in range(9):
-            theSequence.put([random.choice(colours), random.choice(numbers), random.choice([0,1])]
+            theSequence.put([random.choice(colours), random.choice(numbers), random.choice([0,1])])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
