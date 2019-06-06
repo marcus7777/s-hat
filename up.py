@@ -20,7 +20,7 @@ def get_input(user_input, inputs):
       pads = inputs.devices.gamepads
       if len(pads) == 0:
         events = []
-        show_message("plug in controller....")
+        sense.show_message("plug in controller....")
       else:
         events = inputs.get_gamepad()
 
