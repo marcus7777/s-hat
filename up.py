@@ -71,7 +71,7 @@ def play(user_input, inputs):
 # state = "Counting"
 # state = "Showing"
 # state = "Maze"
-# state = "Maze End"
+ state = "Maze End"
 # state = "End Game"
 
   mx = 8  # width and height of the maze
@@ -117,7 +117,7 @@ def play(user_input, inputs):
           colours = [red,blue,green,white,yellow,purple]
           numbers = [1,2,3,4,5,6]
           for i in range(9):
-            theSequence.put([random.choice(colours), random.choice(numbers), random.choice([0,1])])
+            theSequence.append([random.choice(colours), random.choice(numbers), random.choice([0,1])])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "Counting" and len(code) == 2:
