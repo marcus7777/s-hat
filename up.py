@@ -62,7 +62,7 @@ green = (0, 255, 0)
 white = (255, 255, 255)
 yellow = (255, 255, 0)
 purple = (255,0, 255)
-colours = [red,blue,green,white,yellow,purple]
+colours = [red,green,blue,yellow,(255,188,188),purple]
 numbers = [1,2,3,4,5,6]
 text = ".d.a.t.a."
 
