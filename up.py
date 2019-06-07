@@ -101,11 +101,15 @@ def play(user_input, inputs):
       inputed = user_input.get()
       if inputed == "Red 1":
         print(1)
+        if state == "End Game" and theSequence[0][1] == 1:
+          theSequence = theSequence[1:]
         if state == "Go":
           state = "Counting"
           CountingStartedAt = time.time()
       elif inputed == "Green 2":
         print(2)
+        if state == "End Game" and theSequence[0][1] == 2:
+          theSequence = theSequence[1:]
         if state == "Set":
           state = "Go"
         elif state == "Counting" and len(code) == 1:
@@ -115,8 +119,8 @@ def play(user_input, inputs):
           
       elif inputed == "Blue 3":
         print(3)
-        if state == "End Game" and theSequence
-          theSequence
+        if state == "End Game" and theSequence[0][1] == 3:
+          theSequence = theSequence[1:]
         
         if state == "Maze End":
           state = "End Game"
@@ -125,6 +129,8 @@ def play(user_input, inputs):
             theSequence.append([colours[b-1], b, random.choice([0,1]), random.choice(colours)])
           print(theSequence)
       elif inputed == "Yellow 4" :
+        if state == "End Game" and theSequence[0][1] == 4:
+          theSequence = theSequence[1:]
         if state == "Counting" and len(code) == 2:
           code = [2]
         else:
@@ -132,6 +138,8 @@ def play(user_input, inputs):
         print(4)
       elif inputed == "Pink 5" :
         print(5)
+        if state == "End Game" and theSequence[0][1] == 5:
+          theSequence = theSequence[1:]
         if state == "Counting" and len(code) == 4:
           code = [6, 4, 2]
         else:
@@ -140,6 +148,8 @@ def play(user_input, inputs):
 
       elif inputed == "Purple 6" :
         print(6)
+        if state == "End Game" and theSequence[0][1] == 6:
+          theSequence = theSequence[1:]
         if state == "Counting" and len(code) == 3:
           code = [4, 2]
         else:
