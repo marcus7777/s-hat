@@ -353,7 +353,6 @@ def play(user_input, inputs):
             sense.set_pixel(kx, ky, color[maze[ky][kx]])
 
     elif state == 'End Game':
-      text = "data"
       if len(theSequence) > 0:
         if theSequence[0][2]:
           sense.show_letter(str(theSequence[0][1]), theSequence[0][3] )
