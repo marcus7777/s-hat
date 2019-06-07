@@ -64,6 +64,7 @@ yellow = (255, 255, 0)
 purple = (255,0, 255)
 colours = [red,blue,green,white,yellow,purple]
 numbers = [1,2,3,4,5,6]
+text = ".d.a.t.a."
 
 def play(user_input, inputs):
   
@@ -102,14 +103,18 @@ def play(user_input, inputs):
       if inputed == "Red 1":
         print(1)
         if state == "End Game" and theSequence[0][1] == 1:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         if state == "Go":
           state = "Counting"
           CountingStartedAt = time.time()
       elif inputed == "Green 2":
         print(2)
         if state == "End Game" and theSequence[0][1] == 2:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         if state == "Set":
           state = "Go"
         elif state == "Counting" and len(code) == 1:
@@ -120,17 +125,22 @@ def play(user_input, inputs):
       elif inputed == "Blue 3":
         print(3)
         if state == "End Game" and theSequence[0][1] == 3:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         
         if state == "Maze End":
           state = "End Game"
+          text = ".d.a.t.a."
           for i in range(9):
             b = random.choice(numbers)
             theSequence.append([colours[b-1], b, random.choice([0,1]), random.choice(colours)])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "End Game" and theSequence[0][1] == 4:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         if state == "Counting" and len(code) == 2:
           code = [2]
         else:
@@ -139,7 +149,9 @@ def play(user_input, inputs):
       elif inputed == "Pink 5" :
         print(5)
         if state == "End Game" and theSequence[0][1] == 5:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         if state == "Counting" and len(code) == 4:
           code = [6, 4, 2]
         else:
@@ -149,7 +161,9 @@ def play(user_input, inputs):
       elif inputed == "Purple 6" :
         print(6)
         if state == "End Game" and theSequence[0][1] == 6:
+          sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
+          text = text[1:]
         if state == "Counting" and len(code) == 3:
           code = [4, 2]
         else:
