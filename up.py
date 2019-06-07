@@ -342,7 +342,7 @@ def play(user_input, inputs):
       text = "data"
       if len(theSequence) > 0:
         if theSequence[0][2]:
-          sense.show_letter(theSequence[0][0], theSequence[0][3] )
+          sense.show_letter(str(theSequence[0][1]), theSequence[0][3] )
         else:
           sense.clear(theSequence[0][0])
       else:
