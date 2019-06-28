@@ -103,6 +103,8 @@ def play(user_input, inputs):
     else:
       inputed = user_input.get()
       if inputed == "Red 1":
+        if state.endswith('~'):
+          state = state[:-1]
         print(1)
         if state == "End Game" and theSequence[0][1] == 1:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
@@ -112,6 +114,8 @@ def play(user_input, inputs):
           state = "Counting"
           CountingStartedAt = time.time()
       elif inputed == "Green 2":
+        if state.endswith('~'):
+          state = state[:-1]
         print(2)
         if state == "End Game" and theSequence[0][1] == 2:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
@@ -125,6 +129,8 @@ def play(user_input, inputs):
           code = [5, 6, 4, 2]
           
       elif inputed == "Blue 3":
+        if state.endswith('~'):
+          state = state[:-1]
         print(3)
         if state == 'End Game End':
           state = 'End'
@@ -141,6 +147,8 @@ def play(user_input, inputs):
             theSequence.append([colours[b-1], random.choice(numbers), random.choice([0,1]), colours[b-1]])
           print(theSequence)
       elif inputed == "Yellow 4" :
+        if state.endswith('~'):
+          state = state[:-1]
         if state == "End Game" and theSequence[0][1] == 4:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
@@ -151,6 +159,8 @@ def play(user_input, inputs):
           code = [5, 6, 4, 2]
         print(4)
       elif inputed == "Pink 5" :
+        if state.endswith('~'):
+          state = state[:-1]
         print(5)
         if state == "End Game" and theSequence[0][1] == 5:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
@@ -163,6 +173,8 @@ def play(user_input, inputs):
   
 
       elif inputed == "Purple 6" :
+        if state.endswith('~'):
+          state = state[:-1]
         print(6)
         if state == "End Game" and theSequence[0][1] == 6:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
@@ -179,10 +191,14 @@ def play(user_input, inputs):
           rodY = 0
           
       elif inputed == "Left side" :
+        if state.endswith('~'):
+          state = state[:-1]
         print('l')
         if state == "Startup" :
           state = "Ready"
       elif inputed == "Right side" :
+        if state.endswith('~'):
+          state = state[:-1]
         print('r')
         if state == "Ready" :
           state = "Set"
