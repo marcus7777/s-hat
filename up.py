@@ -381,8 +381,8 @@ def play(user_input, inputs):
       else:
         state = 'End Game End'
     elif state == 'End':
-      sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
-      state == 'Startup'
+      sense.show_message("SAFE" , text_colour=green, scroll_speed=0.5)
+      state = 'Startup'
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
