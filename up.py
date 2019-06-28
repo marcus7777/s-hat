@@ -144,7 +144,7 @@ def play(user_input, inputs):
           text = ".d.a.t.a."
           for i in range(9):
             b = random.choice(numbers)
-            theSequence.append([colours[b-1], b, random.choice([0,1])])
+            theSequence.append([colours[b-1], b, random.choice([0,1],random.choice(numbers))])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state.endswith('~'):
@@ -375,11 +375,11 @@ def play(user_input, inputs):
     elif state == 'End Game':
       if len(theSequence) > 0:
         if theSequence[0][2]:
-          sense.show_letter(str(random.choice(numbers)), theSequence[0][0] )
+          sense.show_letter(str(theSequence[0][3]), theSequence[0][0] )
         else:
           sense.clear(theSequence[0][0])
       else:
-        state == 'End Game End'
+        state = 'End Game End'
     elif state == 'End':
       sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
       state == 'Startup'
