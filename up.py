@@ -77,6 +77,7 @@ def play(user_input, inputs):
 # state = "Maze"
 # state = "Maze End"
 # state = "End Game"
+# state = "End Game End"
 
   mx = 8  # width and height of the maze
   my = 8
