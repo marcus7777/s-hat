@@ -78,6 +78,7 @@ def play(user_input, inputs):
 # state = "Maze End"
 # state = "End Game"
 # state = "End Game End"
+# state = "End"
 
   mx = 8  # width and height of the maze
   my = 8
@@ -125,6 +126,8 @@ def play(user_input, inputs):
           
       elif inputed == "Blue 3":
         print(3)
+        if state == 'End Game End':
+          state = 'End'
         if state == "End Game" and theSequence[0][1] == 3:
           sense.show_message(text[0] , text_colour=theSequence[0][3], scroll_speed=0.05)
           theSequence = theSequence[1:]
@@ -135,7 +138,7 @@ def play(user_input, inputs):
           text = ".d.a.t.a."
           for i in range(9):
             b = random.choice(numbers)
-            theSequence.append([colours[b-1], b, random.choice([0,1]), random.choice(colours)])
+            theSequence.append([colours[b-1], random.choice(numbers), random.choice([0,1]), colours[b-1]])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state == "End Game" and theSequence[0][1] == 4:
@@ -360,8 +363,10 @@ def play(user_input, inputs):
         else:
           sense.clear(theSequence[0][0])
       else:
-        sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
-        state = 'Startup'  
+        state == 'End Game End'
+    elif state == 'End':
+      sense.show_message("SAFE" , text_colour=green, scroll_speed=0.05)
+      state == 'Startup'
 user_input = queue.Queue()
 thread1 = threading.Thread(target=get_input,args=(user_input, inputs))
 thread2 = threading.Thread(target=play,args=(user_input, inputs))
