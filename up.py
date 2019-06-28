@@ -144,7 +144,7 @@ def play(user_input, inputs):
           text = ".d.a.t.a."
           for i in range(9):
             b = random.choice(numbers)
-            theSequence.append([colours[b-1], b, random.choice([0,1],random.choice(numbers))])
+            theSequence.append([colours[b-1], b, random.choice([0,1]),random.choice(numbers)])
           print(theSequence)
       elif inputed == "Yellow 4" :
         if state.endswith('~'):
