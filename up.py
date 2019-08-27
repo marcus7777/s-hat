@@ -108,7 +108,7 @@ def play(user_input, inputs):
         print(1)
         if state == "End Game" and theSequence[0][1] == 1:
           sense.show_letter(text[0], text_colour=random.choice(colours))
-          sleep(0.2)
+          sleep(0.4)
           sense.show_letter(text[0], text_colour=random.choice(colours))
           sleep(0.3)
           theSequence = theSequence[1:]
@@ -122,7 +122,7 @@ def play(user_input, inputs):
         print(2)
         if state == "End Game" and theSequence[0][1] == 2:
           sense.show_letter(text[0], text_colour=random.choice(colours))
-          sleep(0.2)
+          sleep(0.4)
           sense.show_letter(text[0], text_colour=random.choice(colours))
           sleep(0.3)
           theSequence = theSequence[1:]
@@ -142,6 +142,9 @@ def play(user_input, inputs):
           state = 'End'
         if state == "End Game" and theSequence[0][1] == 3:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.4)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         
@@ -157,7 +160,7 @@ def play(user_input, inputs):
           state = state[:-1]
         if state == "End Game" and theSequence[0][1] == 4:
           sense.show_letter(text[0], text_colour=random.choice(colours))
-          sleep(0.2)
+          sleep(0.4)
           sense.show_letter(text[0], text_colour=random.choice(colours))
           sleep(0.3)
           theSequence = theSequence[1:]
@@ -173,7 +176,7 @@ def play(user_input, inputs):
         print(5)
         if state == "End Game" and theSequence[0][1] == 5:
           sense.show_letter(text[0], text_colour=random.choice(colours))
-          sleep(0.2)
+          sleep(0.4)
           sense.show_letter(text[0], text_colour=random.choice(colours))
           sleep(0.3)
           theSequence = theSequence[1:]
@@ -190,7 +193,7 @@ def play(user_input, inputs):
         print(6)
         if state == "End Game" and theSequence[0][1] == 6:
           sense.show_letter(text[0], text_colour=random.choice(colours))
-          sleep(0.2)
+          sleep(0.4)
           sense.show_letter(text[0], text_colour=random.choice(colours))
           sleep(0.3)
           theSequence = theSequence[1:]
