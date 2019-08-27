@@ -64,7 +64,7 @@ yellow = (255, 255, 0)
 purple = (255,0, 255)
 colours = [red,green,blue,yellow,(255,188,188),purple]
 numbers = [1,2,3,4,5,6]
-text = "ddaattaa"
+text = "data"
 
 def play(user_input, inputs):
   
@@ -108,6 +108,9 @@ def play(user_input, inputs):
         print(1)
         if state == "End Game" and theSequence[0][1] == 1:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.2)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         if state == "Go":
@@ -119,6 +122,9 @@ def play(user_input, inputs):
         print(2)
         if state == "End Game" and theSequence[0][1] == 2:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.2)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         if state == "Set":
@@ -141,7 +147,7 @@ def play(user_input, inputs):
         
         if state == "Maze End":
           state = "End Game"
-          text = "ddaattaa"
+          text = "data"
           for i in range(9):
             b = random.choice(numbers)
             theSequence.append([colours[b-1], b, random.choice([0,1]),random.choice(numbers)])
@@ -151,6 +157,9 @@ def play(user_input, inputs):
           state = state[:-1]
         if state == "End Game" and theSequence[0][1] == 4:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.2)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         if state == "Counting" and len(code) == 2:
@@ -164,6 +173,9 @@ def play(user_input, inputs):
         print(5)
         if state == "End Game" and theSequence[0][1] == 5:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.2)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         if state == "Counting" and len(code) == 4:
@@ -178,6 +190,9 @@ def play(user_input, inputs):
         print(6)
         if state == "End Game" and theSequence[0][1] == 6:
           sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.2)
+          sense.show_letter(text[0], text_colour=random.choice(colours))
+          sleep(0.3)
           theSequence = theSequence[1:]
           text = text[1:]
         if state == "Counting" and len(code) == 3:
@@ -373,7 +388,7 @@ def play(user_input, inputs):
             sense.set_pixel(kx, ky, color[maze[ky][kx]])
 
     elif state == 'End Game':
-      if len(theSequence) > 0:
+      if len(text) > 0:
         if theSequence[0][2]:
           sense.show_letter(str(theSequence[0][3]), theSequence[0][0] )
         else:
