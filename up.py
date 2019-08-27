@@ -64,7 +64,7 @@ yellow = (255, 255, 0)
 purple = (255,0, 255)
 colours = [red,green,blue,yellow,(255,188,188),purple]
 numbers = [1,2,3,4,5,6]
-text = ".d.a.t.a."
+text = "ddaattaa"
 
 def play(user_input, inputs):
   
@@ -141,7 +141,7 @@ def play(user_input, inputs):
         
         if state == "Maze End":
           state = "End Game"
-          text = ".d.a.t.a."
+          text = "ddaattaa"
           for i in range(9):
             b = random.choice(numbers)
             theSequence.append([colours[b-1], b, random.choice([0,1]),random.choice(numbers)])
