@@ -254,21 +254,21 @@ def play(user_input, inputs):
       drawBox(0,random.randint(2, 7),7,7)
     else:
       acceleration = sense.get_accelerometer_raw()
-      x = acceleration['x'] - offsetX
-      y = acceleration['y'] - offsetY
+#      x = acceleration['x'] - offsetX
+#      y = acceleration['y'] - offsetY
 
-      j = int(x * 7 + 4)
-      q = int(y * 7 + 4)
-      if j >= 0 and q >= 0 and j < 8 - size and q < 8 - size:
-        sense.clear()
-        drawBox(j, q, j + size, q + size)
-      else:
-        sense.clear((255, 0, 0))
-        sleep(0.5)
-        size += 1
-        (offsetX,offsetY) = (x,y)
-        if size > 5:
-          size = 2
+#      j = int(x * 7 + 4)
+#      q = int(y * 7 + 4)
+#      if j >= 0 and q >= 0 and j < 8 - size and q < 8 - size:
+#        sense.clear()
+#        drawBox(j, q, j + size, q + size)
+#      else:
+#        sense.clear((255, 0, 0))
+#        sleep(0.5)
+#        size += 1
+#        (offsetX,offsetY) = (x,y)
+#        if size > 5:
+#          size = 2
     if state == "Set":
       sense.clear(green)
     elif state == "Go":
