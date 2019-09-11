@@ -149,7 +149,6 @@ def play(user_input, inputs):
           text = text[1:]
         
         if state == "Maze End":
-          sense.clear()
           state = "End Game"
           text = "data"
           for i in range(9):
@@ -390,7 +389,8 @@ def play(user_input, inputs):
             sense.set_pixel(saveX, saveY, (0, 125, 0))
           else:
             sense.set_pixel(kx, ky, color[maze[ky][kx]])
-
+    elif state == 'Maze End':
+          sense.clear(blue)
     elif state == 'End Game':
       if len(text) > 0:
         if theSequence[0][2]:
