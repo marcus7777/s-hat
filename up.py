@@ -149,6 +149,7 @@ def play(user_input, inputs):
           text = text[1:]
         
         if state == "Maze End":
+          sense.clear()
           state = "End Game"
           text = "data"
           for i in range(9):
